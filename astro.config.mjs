@@ -7,8 +7,6 @@ import tailwindcss from '@tailwindcss/vite';
 
 import alpinejs from '@astrojs/alpinejs';
 
-import db from '@astrojs/db';
-
 // https://astro.build/config
 export default defineConfig({
   adapter: vercel(),
@@ -19,5 +17,5 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [alpinejs({ entrypoint: "/src/alpine.ts" }), db()]
+  integrations: [alpinejs({ entrypoint: "/src/alpine.ts" })]
 });

@@ -1,18 +1,18 @@
 {
-  "name": "@ansiversa/app-starter",
+  "name": "@ansiversa/email-polisher",
   "version": "1.0.0",
   "private": false,
   "type": "module",
   "scripts": {
     "dev": "astro dev --remote",
     "build": "astro build --remote",
+    "typecheck": "astro check",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@ansiversa/components": "^0.0.75",
     "@astrojs/alpinejs": "^0.4.9",
-    "@astrojs/db": "^0.18.3",
     "@astrojs/vercel": "^9.0.2",
     "@tailwindcss/vite": "^4.1.17",
     "@types/alpinejs": "^3.13.11",
