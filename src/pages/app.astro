@@ -1,0 +1,160 @@
+---
+import AppShell from "../layouts/AppShell.astro";
+import { AvButton, AvCard, AvInput, AvTextarea } from "@ansiversa/components";
+import { APP_DESCRIPTION, APP_NAME } from "../app.meta";
+---
+
+<AppShell title={`${APP_NAME} – Ansiversa`} description={APP_DESCRIPTION}>
+  <main class="mx-auto max-w-7xl px-4 py-6 md:px-6" x-data="$store.emailPolisher" x-init="init()">
+    <div class="grid gap-6 lg:grid-cols-2">
+      <section class="space-y-4">
+        <AvCard className="space-y-3">
+          <h2 class="text-lg font-semibold text-slate-100">Email basics</h2>
+          <AvInput
+            label="Subject"
+            placeholder="Quarterly update and next steps"
+            x-model="basics.subject"
+            @input="persist()"
+          />
+          <AvInput
+            label="Recipient name"
+            placeholder="Jordan Smith"
+            x-model="basics.recipientName"
+            @input="persist()"
+          />
+          <AvInput
+            label="Sender name"
+            placeholder="Alex Rivera"
+            x-model="basics.senderName"
+            @input="persist()"
+          />
+          <AvTextarea
+            label="Context / purpose"
+            rows={3}
+            placeholder="Share any context that should shape the draft."
+            x-model="basics.context"
+            @input="persist()"
+          />
+        </AvCard>
+
+        <AvCard className="space-y-4">
+          <h2 class="text-lg font-semibold text-slate-100">Tone and refinement</h2>
+
+          <div>
+            <p class="mb-2 text-sm font-medium text-slate-200">Tone</p>
+            <div class="flex flex-wrap gap-2">
+              <template x-for="tone in tones" :key="tone">
+                <button
+                  type="button"
+                  class="av-btn-outline av-btn-sm"
+                  :class="{ 'ring-2 ring-cyan-400': selectedTone === tone }"
+                  @click="selectedTone = tone; persist()"
+                  x-text="tone"
+                />
+              </template>
+            </div>
+          </div>
+
+          <div>
+            <p class="mb-2 text-sm font-medium text-slate-200">Refinement controls</p>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <label class="flex items-center gap-2 text-sm text-slate-200">
+                <input type="checkbox" x-model="refinements.shorter" @change="persist()" />
+                <span>Make shorter</span>
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-200">
+                <input type="checkbox" x-model="refinements.clearer" @change="persist()" />
+                <span>Make clearer</span>
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-200">
+                <input type="checkbox" x-model="refinements.warmer" @change="persist()" />
+                <span>Make warmer</span>
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-200">
+                <input type="checkbox" x-model="refinements.direct" @change="persist()" />
+                <span>Make more direct</span>
+              </label>
+            </div>
+          </div>
+        </AvCard>
+
+        <AvCard className="space-y-4">
+          <h2 class="text-lg font-semibold text-slate-100">Variants</h2>
+
+          <div class="flex flex-wrap gap-2">
+            <template x-for="variant in variants" :key="variant.id">
+              <button
+                type="button"
+                class="av-btn-outline av-btn-sm"
+                :class="{ 'ring-2 ring-cyan-400': activeVariantId === variant.id }"
+                @click="setActiveVariant(variant.id)"
+                x-text="variant.label"
+              />
+            </template>
+          </div>
+
+          <AvTextarea
+            label="Opening"
+            rows={2}
+            placeholder="Thank you for your time today."
+            x-model="activeVariant.opening"
+            @input="persist()"
+          />
+          <AvTextarea
+            label="Main message"
+            rows={5}
+            placeholder="Here is the core message you want to send."
+            x-model="activeVariant.body"
+            @input="persist()"
+          />
+          <AvTextarea
+            label="Closing"
+            rows={2}
+            placeholder="Please let me know if you'd like any adjustments."
+            x-model="activeVariant.closing"
+            @input="persist()"
+          />
+          <AvTextarea
+            label="Signature"
+            rows={2}
+            placeholder="Best regards,"
+            x-model="activeVariant.signature"
+            @input="persist()"
+          />
+
+          <div class="flex flex-wrap gap-2 pt-2">
+            <AvButton @click="copyCurrent()">Copy current email</AvButton>
+            <AvButton variant="outline" @click="copyAll()">Copy all variants</AvButton>
+            <AvButton variant="ghost" @click="resetDraft()">Reset / new draft</AvButton>
+          </div>
+          <p class="text-xs text-slate-400" x-text="copyStatus"></p>
+        </AvCard>
+      </section>
+
+      <section>
+        <AvCard className="sticky top-4 space-y-4">
+          <h2 class="text-lg font-semibold text-slate-100">Live preview</h2>
+          <div class="space-y-2 rounded-xl border border-slate-700/60 bg-slate-900/40 p-4 text-slate-100">
+            <p><span class="text-slate-400">Subject:</span> <span x-text="basics.subject || '[No subject]'"></span></p>
+            <p><span class="text-slate-400">Tone:</span> <span x-text="selectedTone"></span></p>
+            <p>
+              <span class="text-slate-400">Refinement flags:</span>
+              <span x-text="refinementLabels.length ? refinementLabels.join(', ') : 'None selected'"></span>
+            </p>
+            <template x-if="basics.context">
+              <p><span class="text-slate-400">Context:</span> <span x-text="basics.context"></span></p>
+            </template>
+
+            <div class="h-px w-full bg-slate-700/60"></div>
+
+            <p x-text="basics.recipientName ? `Dear ${basics.recipientName},` : 'Dear [Recipient],'"></p>
+            <p class="whitespace-pre-wrap" x-text="activeVariant.opening || '[Opening]'"></p>
+            <p class="whitespace-pre-wrap" x-text="activeVariant.body || '[Main message]'"></p>
+            <p class="whitespace-pre-wrap" x-text="activeVariant.closing || '[Closing]'"></p>
+            <p class="whitespace-pre-wrap" x-text="activeVariant.signature || basics.senderName || '[Signature]'"></p>
+          </div>
+        </AvCard>
+      </section>
+    </div>
+  </main>
+</AppShell>

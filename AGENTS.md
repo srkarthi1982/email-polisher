@@ -26,5 +26,6 @@ MANDATORY: After completing each task, update this repo’s AGENTS.md Task Log (
 
 ## Task Log (Recent)
 - Keep newest first; include date and short summary.
+- 2026-03-24 Email Polisher V1 implementation started and completed for active development scope: implemented V1 structured workflow (email basics, tone + refinement controls, Draft A/B/C variant workflow, live preview, copy current/all variants, localStorage draft persistence, reset/new draft confirmation), made `/app` public with landing CTA pathing updates, and validated with `npm install` + `npm run build` pass; `npm run typecheck` is blocked because `@astrojs/check`/`typescript` install is denied by registry policy in this environment.
 - 2026-02-09 Added repo-level AGENTS.md enforcement contract (workspace reference + mandatory task-log update rule).
 - 2026-02-09 Initialized repo AGENTS baseline for single-repo Codex/AI safety.
