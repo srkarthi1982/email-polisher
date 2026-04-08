@@ -1,94 +1,153 @@
 ---
 import AppShell from "../layouts/AppShell.astro";
-import { AvContainer, AvButton } from "@ansiversa/components";
+import LandingPageStandard from "../components/landing/LandingPageStandard.astro";
+import type { LandingPageContent } from "../lib/landing";
 import { APP_DESCRIPTION, APP_NAME } from "../app.meta";
 
 const title = `${APP_NAME} – Ansiversa`;
 const description = APP_DESCRIPTION;
+
+const landingContent: LandingPageContent = {
+  categoryLabel: "Writing Workspace",
+  appLabel: "Public local-only workspace",
+  title: "Polish important emails with structure instead of rewriting the same message from scratch.",
+  subtitle:
+    "Fill the email basics, compare Draft A/B/C variants, review the live preview, copy the version you need, and reset the workspace when you are ready to start over.",
+  heroBullets: [
+    "Capture subject, recipients, tone, and refinement controls in one local draft flow",
+    "Maintain three manual email variants without switching tools or losing context",
+    "Copy the current variant or all drafts and keep the workspace in local browser storage",
+  ],
+  primaryCta: {
+    label: "Open Workspace",
+    href: "/app",
+  },
+  secondaryCta: {
+    label: "See Workflow",
+    href: "#workflow",
+    variant: "ghost",
+  },
+  heroNote:
+    "Current V1 is a public local drafting tool. It is not a server-backed email system, outbound mail platform, or AI email generator.",
+  heroPanel: {
+    eyebrow: "Draft flow",
+    title: "Fill → Compare → Copy",
+    steps: [
+      "1. Enter the email basics and tone settings",
+      "2. Edit and compare Draft A, B, and C with live preview",
+      "3. Copy the current variant or all drafts, then reset when done",
+    ],
+    meta: [
+      { value: "Local", label: "Storage model" },
+      { value: "Public", label: "Workspace access" },
+    ],
+  },
+  features: {
+    title: "What Email Polisher gives you in V1",
+    lead:
+      "The product is built for structured local email drafting with variants and copy actions, not for server-side sending or AI rewriting.",
+    items: [
+      {
+        title: "Structured draft basics",
+        description:
+          "Keep subject, recipients, sender, context, tone, and refinement controls connected in one local workspace.",
+      },
+      {
+        title: "Three manual variants",
+        description:
+          "Use Draft A, B, and C to keep alternate email versions visible without losing your earlier draft paths.",
+      },
+      {
+        title: "Live preview and copy output",
+        description:
+          "See the visible email formatting update immediately, then copy the current draft or all variants when ready.",
+      },
+      {
+        title: "Reset-safe local persistence",
+        description:
+          "The current draft remains in local storage across refresh until you intentionally clear it.",
+      },
+    ],
+  },
+  pillars: {
+    title: "Why this works better than editing emails in a blank composer",
+    lead:
+      "The product stays intentionally simple: one local draft workspace, three visible variants, and one clear path from rough input to copy-ready email text.",
+    items: [
+      {
+        title: "Truthful product boundary",
+        description:
+          "This is a browser-local drafting and polishing tool, not an outbound mail system and not an AI execution service.",
+      },
+      {
+        title: "Variant-first drafting rhythm",
+        description:
+          "Draft A/B/C makes comparison practical without forcing you to duplicate text across separate tools.",
+      },
+      {
+        title: "Preview-connected editing",
+        description:
+          "The visible preview stays tied to the current draft state so you can refine structure while you write.",
+      },
+      {
+        title: "Public, friction-light access",
+        description:
+          "The workspace is intentionally public in V1 so you can open it and start polishing immediately.",
+      },
+    ],
+  },
+  workflow: {
+    eyebrow: "How it works",
+    title: "Move from rough email notes to copy-ready variants",
+    lead:
+      "The workflow is designed for one local draft at a time, with the visible preview always reflecting the active variant.",
+    steps: [
+      {
+        title: "Fill the email setup",
+        description:
+          "Open the public workspace and enter the subject, recipients, tone, and context you want reflected in the draft.",
+      },
+      {
+        title: "Refine Draft A, B, and C",
+        description:
+          "Switch between the three manual variants while using the live preview to compare the shape of each message.",
+      },
+      {
+        title: "Copy what you need and reset later",
+        description:
+          "Copy the current variant or all drafts for external use, then reset the workspace when starting the next email.",
+      },
+    ],
+  },
+  showcase: {
+    eyebrow: "Current product shape",
+    title: "Built for local email polishing, not server-backed email delivery",
+    description:
+      "The landing copy stays aligned to the verified implementation: Email Polisher is a local-only drafting workspace with manual variants, live preview, copy actions, reset behavior, and local persistence.",
+    bullets: [
+      "Good fit for drafting important emails with visible structure before copying out",
+      "Centered on manual editing, Draft A/B/C comparison, live preview, copy output, and reset flow",
+    ],
+    calloutLabel: "Freeze truth",
+    calloutValue: "Local-only drafting workspace",
+  },
+  finalCta: {
+    title: "Start polishing the next email with more control",
+    description:
+      "Open the workspace, compare the three draft paths, and leave with copy-ready text from the version that fits best.",
+    primaryCta: {
+      label: "Open Workspace",
+      href: "/app",
+    },
+    secondaryCta: {
+      label: "Review Features",
+      href: "#features",
+      variant: "ghost",
+    },
+  },
+};
 ---
 
 <AppShell title={title} description={description}>
-  <!-- Hero -->
-  <section class="av-hero">
-    <AvContainer size="narrow" className="av-hero__content--narrow">
-      <div class="av-hero__content">
-        <div class="av-kicker">
-          <span>Career & Work · Ansiversa Mini App</span>
-        </div>
-        <h1 class="av-gradient-text">{APP_NAME}</h1>
-        <p>
-          {APP_DESCRIPTION}
-        </p>
-      </div>
-      <div class="av-cta-row">
-        <AvButton href="/app">Open app</AvButton>
-      </div>
-    </AvContainer>
-  </section>
-
-  <!-- Problem -->
-  <section class="av-section">
-    <AvContainer size="narrow">
-      <div class="av-section-header">
-        <h2 class="av-section-title">The problem it solves</h2>
-        <p class="av-section-lead">
-          Career tasks like resumes, meetings, and communication often feel scattered.
-        </p>
-      </div>
-      <div class="av-section-body space-y-3 text-slate-300">
-        <p>Email Polisher gives you a clean workspace to draft and refine business emails quickly.</p>
-      </div>
-    </AvContainer>
-  </section>
-
-  <!-- Why this mini app -->
-  <section class="av-section">
-    <AvContainer size="narrow">
-      <div class="av-section-header">
-        <h2 class="av-section-title">Why Email Polisher feels different</h2>
-        <p class="av-section-lead">
-          A focused mini app inside the larger Ansiversa ecosystem.
-        </p>
-      </div>
-      <div class="av-section-body">
-        <ul class="space-y-2 text-slate-300 list-disc list-inside">
-          <li>Focused on a single, real-world career task.</li>
-          <li>Gives you professional-quality output without complex tools.</li>
-          <li>Keeps everything structured, consistent, and reusable.</li>
-        </ul>
-      </div>
-    </AvContainer>
-  </section>
-
-  <!-- How it works -->
-  <section class="av-section">
-    <AvContainer size="narrow">
-      <div class="av-section-header">
-        <h2 class="av-section-title">How it works</h2>
-        <p class="av-section-lead">
-          Simple, clear steps so people can start in under a minute.
-        </p>
-      </div>
-      <ol class="av-section-body space-y-2 text-slate-300 list-decimal list-inside">
-          <li>Enter subject, recipients, tone, and context.</li>
-          <li>Draft and compare three polished variants.</li>
-          <li>Copy your preferred draft instantly.</li>
-      </ol>
-    </AvContainer>
-  </section>
-
-  <!-- Final CTA -->
-  <section class="av-section">
-    <AvContainer size="narrow">
-      <div class="av-section-header">
-        <h2 class="av-section-title">Ready to polish your next email?</h2>
-        <p class="av-section-lead">
-          Open the app, refine your message with structure, and send with confidence.
-        </p>
-      </div>
-      <div class="av-cta-row">
-        <AvButton href="/app">Start in /app</AvButton>
-      </div>
-    </AvContainer>
-  </section>
+  <LandingPageStandard content={landingContent} />
 </AppShell>
